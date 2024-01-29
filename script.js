@@ -15,9 +15,18 @@ function displayValue() {
     lower_disp.textContent = '';
     upper_disp.textContent = '';
     numbers.forEach(function (element) {
-        element.addEventListener('click', function () {
-            display(element.id);
-        });
+        if (element.id == '.') {
+            element.addEventListener('click', function() {
+                if (!(lower_disp.textContent.includes('.'))) {
+                    display(element.id);
+                }
+            })
+        }
+        else {
+            element.addEventListener('click', function () {
+                display(element.id);
+            });
+        }
     })
     operators.forEach(function (element) {
         if (element.id == 'sign') {
@@ -25,10 +34,10 @@ function displayValue() {
                 if (lower_disp.textContent.trim().length == 13 && lower_disp.textContent.startsWith('-')) {
                     lower_disp.textContent = lower_disp.textContent.slice(1)
                 }
-                else if (lower_disp.textContent.trim().length <13) {
+                else if (lower_disp.textContent.trim().length < 13) {
                     lower_disp.textContent = lower_disp.textContent.startsWith('-') ? lower_disp.textContent.slice(1) : '-' + lower_disp.textContent;
                 }
-                else if(!(lower_disp.textContent.startsWith('-'))&&lower_disp.textContent.trim().length >= 13) {
+                else if (!(lower_disp.textContent.startsWith('-')) && lower_disp.textContent.trim().length >= 13) {
                     alert('Max char limit reached');
                 }
             });
