@@ -45,21 +45,21 @@ button:active{
     height:  90px;
     border-radius: 6px;
     margin-bottom: 8px;
-    background-color: rgb(211, 218, 223);
+    background-color: rgb(238, 242, 244);
     padding: 3px;
 }
 #upper_display {
     display: flex;
     height: 25px;
-    font-size: 20px;
+    font-size: 15px;
     flex-direction: column;
     text-align: end;
 }
 #lower_display {
     display: flex;
-    font-size: 50px;
+    font-size: 30px;
     flex-direction: column;
-    text-align:end;
+    text-align:right;
 }
 .buttons {
     display: flex;
