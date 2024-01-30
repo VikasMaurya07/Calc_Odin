@@ -210,10 +210,19 @@ function displayValue() {
                         operate();
                     }
                 }
-            });
-        }
-    }
-    );
+                else if(lower_disp.textContent.trim().length === 0&&element.id !== '='){
+                    console.log('yes');
+                    evalArray[1] =  element.id;
+                    console.log(evalArray);
+                    var temp =  upper_disp.textContent.split('');
+                    temp[temp.length-1] = element.id;
+                    var straight = temp.join('');
+                    upper_disp.textContent = straight;
+                    } 
+
+                });
+            };
+        });
     controls.forEach(function (element) {
         if (element.id == 'AC') {
             element.addEventListener('click', function () {
