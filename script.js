@@ -79,7 +79,7 @@ function evalFunc(Array) {
     }
     if (opr2 !== '=') {
         var strResult = result.toString();
-        if (strResult.length <= 13) {
+        if (strResult.length <= 12) {
             console.log(Array);
             Array[0] = result;
             Array[1] = opr2;
@@ -89,9 +89,9 @@ function evalFunc(Array) {
             lower_disp.textContent = Array[0];
             resultOnDisplay = true;
         }
-        else if ((strResult.length) > 13 && (result < 9999999999999 && result > -9999999999999)) {
+        else if ((strResult.length) > 12 && (result < 9999999999999 && result > -9999999999999)) {
             let decIndex = strResult.indexOf('.');
-            let n = strResult.length - (strResult.length - 13) - decIndex - 1;
+            let n = strResult.length - (strResult.length - 12) - decIndex - 1;
             result = Math.round(result * 10 ** n) / 10 ** n;
             console.log(Array);
             Array[0] = result;
@@ -110,7 +110,7 @@ function evalFunc(Array) {
     }
     else if (opr2 == '=') {
         var strResult = result.toString();
-        if (strResult.length <= 13) {
+        if (strResult.length <= 12) {
             console.log(Array);
             Array[0] = result;
             console.log(Array);
@@ -120,9 +120,9 @@ function evalFunc(Array) {
             resultOnDisplay = true;
             endResult = true;
         }
-        else if ((strResult.length) > 13 && (result < 9999999999999 && result > -9999999999999)) {
+        else if ((strResult.length) > 12 && (result < 9999999999999 && result > -9999999999999)) {
             let decIndex = strResult.indexOf('.');
-            let n = strResult.length - (strResult.length - 13) - decIndex - 1;
+            let n = strResult.length - (strResult.length - 12) - decIndex - 1;
             result = Math.round(result * 10 ** n) / 10 ** n;
             console.log(Array);
             Array[0] = result;
@@ -161,7 +161,7 @@ function displayValue() {
             element.addEventListener('click', function () {
                 display();
                 if (!(lower_disp.textContent.includes('.'))) {
-                    if (lower_disp.textContent.trim().length < 13) {
+                    if (lower_disp.textContent.trim().length < 12) {
                         lower_disp.textContent += element.id;
                     }
                 }
@@ -170,7 +170,7 @@ function displayValue() {
         else {
             element.addEventListener('click', function () {
                 display();
-                if (lower_disp.textContent.trim().length < 13) {
+                if (lower_disp.textContent.trim().length < 12) {
                     lower_disp.textContent += element.id;
                 }
             });
@@ -179,13 +179,13 @@ function displayValue() {
     operators.forEach(function (element) {
         if (element.id == 'sign') {
             element.addEventListener('click', function () {
-                if (lower_disp.textContent.trim().length == 13 && lower_disp.textContent.startsWith('-')) {
+                if (lower_disp.textContent.trim().length == 12 && lower_disp.textContent.startsWith('-')) {
                     lower_disp.textContent = lower_disp.textContent.slice(1)
                 }
-                else if (lower_disp.textContent.trim().length < 13) {
+                else if (lower_disp.textContent.trim().length < 12) {
                     lower_disp.textContent = lower_disp.textContent.startsWith('-') ? lower_disp.textContent.slice(1) : '-' + lower_disp.textContent;
                 }
-                else if (!(lower_disp.textContent.startsWith('-')) && lower_disp.textContent.trim().length >= 13) {
+                else if (!(lower_disp.textContent.startsWith('-')) && lower_disp.textContent.trim().length >= 12) {
                     alert('Max char limit reached');
                 }
             });
@@ -210,19 +210,33 @@ function displayValue() {
                         operate();
                     }
                 }
-                else if(lower_disp.textContent.trim().length === 0&&element.id !== '='){
-                    console.log('yes');
-                    evalArray[1] =  element.id;
-                    console.log(evalArray);
-                    var temp =  upper_disp.textContent.split('');
-                    temp[temp.length-1] = element.id;
-                    var straight = temp.join('');
-                    upper_disp.textContent = straight;
-                    } 
+                else if (lower_disp.textContent.trim().length === 0 && element.id !== '=') {
+                    if (upper_disp.textContent.trim().length < 15) {
+                        console.log('yes');
+                        evalArray[1] = element.id;
+                        console.log(evalArray);
+                        var temp = upper_disp.textContent.split('');
+                        temp[temp.length - 1] = element.id;
+                        var straight = temp.join('');
+                        upper_disp.textContent = straight;
+                    }
+                    else if (upper_disp.textContent.trim().length >= 15) {
+                        let joined2 = evalArray.join('');
+                        upper_disp.textContent = joined2;
+                        console.log('yes');
+                        evalArray[1] = element.id;
+                        console.log(evalArray);
+                        var temp = upper_disp.textContent.split('');
+                        temp[temp.length - 1] = element.id;
+                        var straight = temp.join('');
+                        upper_disp.textContent = straight;
+                    }
 
-                });
-            };
-        });
+                }
+
+            });
+        };
+    });
     controls.forEach(function (element) {
         if (element.id == 'AC') {
             element.addEventListener('click', function () {
