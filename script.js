@@ -79,7 +79,7 @@ function evalFunc(Array) {
     }
     if (opr2 !== '=') {
         var strResult = result.toString();
-        if (strResult.length <= 12) {
+        if (strResult.length < 12) {
             console.log(Array);
             Array[0] = result;
             Array[1] = opr2;
@@ -89,7 +89,7 @@ function evalFunc(Array) {
             lower_disp.textContent = Array[0];
             resultOnDisplay = true;
         }
-        else if ((strResult.length) > 12 && (result < 9999999999999 && result > -9999999999999)) {
+        else if ((strResult.length) > 12 && (result < 99999999999 && result > -99999999999)) {
             let decIndex = strResult.indexOf('.');
             let n = strResult.length - (strResult.length - 12) - decIndex - 1;
             result = Math.round(result * 10 ** n) / 10 ** n;
@@ -102,7 +102,7 @@ function evalFunc(Array) {
             lower_disp.textContent = Array[0];
             resultOnDisplay = true;
         }
-        else if (result > 9999999999999 || result < -9999999999999) {
+        else if (result > 99999999999 || result < -99999999999) {
             console.log(evalArray);
             hyperResult = true;
             handleHyperValue(hyperResult);
@@ -110,7 +110,7 @@ function evalFunc(Array) {
     }
     else if (opr2 == '=') {
         var strResult = result.toString();
-        if (strResult.length <= 12) {
+        if (strResult.length < 12) {
             console.log(Array);
             Array[0] = result;
             console.log(Array);
@@ -120,7 +120,7 @@ function evalFunc(Array) {
             resultOnDisplay = true;
             endResult = true;
         }
-        else if ((strResult.length) > 12 && (result < 9999999999999 && result > -9999999999999)) {
+        else if ((strResult.length) > 12 && (result < 99999999999 && result > -99999999999)) {
             let decIndex = strResult.indexOf('.');
             let n = strResult.length - (strResult.length - 12) - decIndex - 1;
             result = Math.round(result * 10 ** n) / 10 ** n;
@@ -133,7 +133,7 @@ function evalFunc(Array) {
             resultOnDisplay = true;
             endResult = true
         }
-        else if (result > 9999999999999 || result < -9999999999999) {
+        else if (result > 99999999999 || result < -99999999999) {
             console.log(evalArray);
             hyperResult = true;
             endResult = true;
