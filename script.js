@@ -4,35 +4,175 @@ const controls = document.querySelectorAll('.con');
 const operators = document.querySelectorAll('.op');
 const numbers = document.querySelectorAll('.num');
 var store = '';
-function display(string) {
-    if (lower_disp.textContent.trim().length < 13) {
-        lower_disp.textContent += string;
+var resultOnDisplay = false;
+var hyperResult = false;
+var endResult = false;
+var evalArray = [];
+function display() {
+    if (endResult) {
+        resultOnDisplay = false;
+        upper_disp.textContent = '';
+        evalArray = [];
+        endResult = false;
+    }
+    else if (resultOnDisplay) {
+        lower_disp.textContent = '';
+        resultOnDisplay = false;
+    }
+}
+function handleHyperValue(number) {
+    if (number) {
+        alert('result out of bounds');
+        let RogueOnes = evalArray.splice(-2);
+        let joined = RogueOnes.join('');
+        var reverseUpper = upper_disp.textContent.split('').reverse().join('');
+        var reverseRogue = joined.split('').reverse().join('');
+        var reversedMod = reverseUpper.replace(reverseRogue, "");
+        var straight = reversedMod.split('').reverse().join('');
+        upper_disp.textContent = straight;
+        lower_disp.textContent = evalArray[0];
+        resultOnDisplay = true;
+
+    }
+}
+function evalFunc(Array) {
+    let num1 = Array[0];
+    let opr1 = Array[1];
+    let num2 = Array[2];
+    let opr2 = Array[3];
+    var result;
+    switch (opr1) {
+        case '+':
+            result = num1 + num2;
+            break;
+        case '-':
+            result = num1 - num2;
+            break;
+        case '*':
+            result = num1 * num2;
+            break;
+        case '/':
+            if (num2 == 0) {
+                alert("Don't divide by zero!");
+                upper_disp.textContent = '';
+                evalArray = [];
+            }
+            else {
+                result = num1 / num2;
+            }
+            break;
+        case '%':
+            if (num2 == 0) {
+                alert("Don't divide by zero!");
+                upper_disp.textContent = '';
+                evalArray = [];
+            }
+            else {
+                result = num1 % num2;
+            }
+            break;
+        default:
+            alert('Math error');
+            upper_disp.textContent = '';
+            evalArray = [];
+            console.log(Array);
+    }
+    if (opr2 !== '=') {
+        var strResult = result.toString();
+        if (strResult.length <= 13) {
+            console.log(Array);
+            Array[0] = result;
+            Array[1] = opr2;
+            console.log(Array);
+            Array.splice(2);
+            console.log(Array);
+            lower_disp.textContent = Array[0];
+            resultOnDisplay = true;
+        }
+        else if ((strResult.length) > 13 && (result < 9999999999999 && result > -9999999999999)) {
+            let decIndex = strResult.indexOf('.');
+            let n = strResult.length - (strResult.length - 13) - decIndex - 1;
+            result = Math.round(result * 10 ** n) / 10 ** n;
+            console.log(Array);
+            Array[0] = result;
+            Array[1] = opr2;
+            console.log(Array);
+            Array.splice(2);
+            console.log(Array);
+            lower_disp.textContent = Array[0];
+            resultOnDisplay = true;
+        }
+        else if (result > 9999999999999 || result < -9999999999999) {
+            console.log(evalArray);
+            hyperResult = true;
+            handleHyperValue(hyperResult);
+        }
+    }
+    else if (opr2 == '=') {
+        var strResult = result.toString();
+        if (strResult.length <= 13) {
+            console.log(Array);
+            Array[0] = result;
+            console.log(Array);
+            Array.splice(1);
+            console.log(Array);
+            lower_disp.textContent = Array[0];
+            resultOnDisplay = true;
+            endResult = true;
+        }
+        else if ((strResult.length) > 13 && (result < 9999999999999 && result > -9999999999999)) {
+            let decIndex = strResult.indexOf('.');
+            let n = strResult.length - (strResult.length - 13) - decIndex - 1;
+            result = Math.round(result * 10 ** n) / 10 ** n;
+            console.log(Array);
+            Array[0] = result;
+            console.log(Array);
+            Array.splice(1);
+            console.log(Array);
+            lower_disp.textContent = Array[0];
+            resultOnDisplay = true;
+            endResult = true
+        }
+        else if (result > 9999999999999 || result < -9999999999999) {
+            console.log(evalArray);
+            hyperResult = true;
+            endResult = true;
+            handleHyperValue(hyperResult);
+        }
+        display();
     }
 }
 function operate() {
-    console.log(store);
     const string = store;
-    const operand = parseFloat(string.slice(0,string.length-1))
-    console.log(operand);
-    const opr = string[string.length-1];
-    console.log(opr);
+    const operand = parseFloat(string.slice(0, string.length - 1))
+    const opr = string[string.length - 1];
+    evalArray.push(operand);
+    evalArray.push(opr);
     store = '';
-
+    if (evalArray.length == 4) {
+        evalFunc(evalArray);
+    }
 }
 function displayValue() {
     lower_disp.textContent = '';
     upper_disp.textContent = '';
     numbers.forEach(function (element) {
         if (element.id == '.') {
-            element.addEventListener('click', function() {
+            element.addEventListener('click', function () {
+                display();
                 if (!(lower_disp.textContent.includes('.'))) {
-                    display(element.id);
+                    if (lower_disp.textContent.trim().length < 13) {
+                        lower_disp.textContent += element.id;
+                    }
                 }
             })
         }
         else {
             element.addEventListener('click', function () {
-                display(element.id);
+                display();
+                if (lower_disp.textContent.trim().length < 13) {
+                    lower_disp.textContent += element.id;
+                }
             });
         }
     })
@@ -52,19 +192,35 @@ function displayValue() {
         }
         else {
             element.addEventListener('click', function () {
-                lower_disp.textContent += element.id;
-                upper_disp.textContent += lower_disp.textContent;
-                store += lower_disp.textContent;
-                lower_disp.textContent = '';
-                operate();
+                var lastChar = upper_disp.textContent[upper_disp.textContent.trim().length - 1];
+                if ((lastChar !== '-' && lastChar !== '+' && lastChar !== '/' && lastChar !== '*' && lastChar !== '%' && lastChar !== '=') || (lower_disp.textContent.trim().length !== 0) && (lower_disp.textContent !== '-')) {
+                    lower_disp.textContent += element.id;
+                    if (upper_disp.textContent.trim().length < 15) {
+                        upper_disp.textContent += lower_disp.textContent;
+                        store += lower_disp.textContent;
+                        lower_disp.textContent = '';
+                        operate();
+                    }
+                    else if (upper_disp.textContent.trim().length >= 15) {
+                        let joined2 = evalArray.join('');
+                        upper_disp.textContent = joined2;
+                        upper_disp.textContent += lower_disp.textContent;
+                        store += lower_disp.textContent;
+                        lower_disp.textContent = '';
+                        operate();
+                    }
+                }
             });
         }
-    });
+    }
+    );
     controls.forEach(function (element) {
         if (element.id == 'AC') {
             element.addEventListener('click', function () {
                 upper_disp.textContent = '';
                 lower_disp.textContent = '';
+                store = '';
+                evalArray = [];
             })
         }
         if (element.id == 'C') {
