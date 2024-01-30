@@ -3,12 +3,20 @@ const lower_disp = document.querySelector('#lower_display');
 const controls = document.querySelectorAll('.con');
 const operators = document.querySelectorAll('.op');
 const numbers = document.querySelectorAll('.num');
+var store = '';
 function display(string) {
     if (lower_disp.textContent.trim().length < 13) {
         lower_disp.textContent += string;
     }
 }
-function operate(string) {
+function operate() {
+    console.log(store);
+    const string = store;
+    const operand = parseFloat(string.slice(0,string.length-1))
+    console.log(operand);
+    const opr = string[string.length-1];
+    console.log(opr);
+    store = '';
 
 }
 function displayValue() {
@@ -46,7 +54,9 @@ function displayValue() {
             element.addEventListener('click', function () {
                 lower_disp.textContent += element.id;
                 upper_disp.textContent += lower_disp.textContent;
+                store += lower_disp.textContent;
                 lower_disp.textContent = '';
+                operate();
             });
         }
     });
