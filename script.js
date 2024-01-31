@@ -54,8 +54,11 @@ function evalFunc(Array) {
         case '/':
             if (num2 == 0) {
                 alert("Don't divide by zero!");
-                upper_disp.textContent = '';
-                evalArray = [];
+                evalArray.splice(2);
+                var temp = upper_disp.textContent.split('');
+                temp.splice(upper_disp.textContent.trim().length-2)
+                var straight = temp.join('');
+                upper_disp.textContent = straight;
             }
             else {
                 result = num1 / num2;
@@ -64,8 +67,11 @@ function evalFunc(Array) {
         case '%':
             if (num2 == 0) {
                 alert("Don't divide by zero!");
-                upper_disp.textContent = '';
-                evalArray = [];
+                evalArray.splice(2);
+                var temp = upper_disp.textContent.split('');
+                temp.splice(upper_disp.textContent.trim().length-2)
+                var straight = temp.join('');
+                upper_disp.textContent = straight;
             }
             else {
                 result = num1 % num2;
@@ -73,8 +79,11 @@ function evalFunc(Array) {
             break;
         default:
             alert('Math error');
-            upper_disp.textContent = '';
-            evalArray = [];
+            evalArray.splice(2);
+            var temp = upper_disp.textContent.split('');
+            temp.splice(upper_disp.textContent.trim().length-2)
+            var straight = temp.join('');
+            upper_disp.textContent = straight;
             console.log(Array);
     }
     if (opr2 !== '=') {
@@ -89,7 +98,7 @@ function evalFunc(Array) {
             lower_disp.textContent = Array[0];
             resultOnDisplay = true;
         }
-        else if ((strResult.length) > 12 && (result < 99999999999 && result > -99999999999)) {
+        else if ((strResult.length) > 12 && (result < 99999999999 && result > -9999999999)) {
             let decIndex = strResult.indexOf('.');
             let n = strResult.length - (strResult.length - 12) - decIndex - 1;
             result = Math.round(result * 10 ** n) / 10 ** n;
@@ -102,7 +111,7 @@ function evalFunc(Array) {
             lower_disp.textContent = Array[0];
             resultOnDisplay = true;
         }
-        else if (result > 99999999999 || result < -99999999999) {
+        else if (result > 99999999999 || result < -9999999999) {
             console.log(evalArray);
             hyperResult = true;
             handleHyperValue(hyperResult);
@@ -120,7 +129,7 @@ function evalFunc(Array) {
             resultOnDisplay = true;
             endResult = true;
         }
-        else if ((strResult.length) > 12 && (result < 99999999999 && result > -99999999999)) {
+        else if ((strResult.length) > 12 && (result < 99999999999 && result > -9999999999)) {
             let decIndex = strResult.indexOf('.');
             let n = strResult.length - (strResult.length - 12) - decIndex - 1;
             result = Math.round(result * 10 ** n) / 10 ** n;
@@ -133,7 +142,7 @@ function evalFunc(Array) {
             resultOnDisplay = true;
             endResult = true
         }
-        else if (result > 99999999999 || result < -99999999999) {
+        else if (result > 99999999999 || result < -9999999999) {
             console.log(evalArray);
             hyperResult = true;
             endResult = true;
