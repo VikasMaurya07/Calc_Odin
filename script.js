@@ -8,6 +8,22 @@ var resultOnDisplay = false;
 var hyperResult = false;
 var endResult = false;
 var evalArray = [];
+function handleRogue(op) {
+    evalArray.splice(2);
+    var temp = upper_disp.textContent.split('').reverse();
+    var index = temp.indexOf(op);
+    if(index == 0) {
+        temp.shift();
+        index = temp.indexOf(op);
+        temp.splice(0,index);
+    }
+    else{
+        temp.splice(0,index);
+    }
+    temp.reverse();
+    var straight = temp.join('');
+    upper_disp.textContent = straight;
+}
 function display() {
     if (endResult) {
         resultOnDisplay = false;
@@ -53,12 +69,8 @@ function evalFunc(Array) {
             break;
         case '/':
             if (num2 == 0) {
-                alert("Don't divide by zero!");
-                evalArray.splice(2);
-                var temp = upper_disp.textContent.split('');
-                temp.splice(upper_disp.textContent.trim().length-2)
-                var straight = temp.join('');
-                upper_disp.textContent = straight;
+                alert("Don't divide by zero!😡");
+                handleRogue('/');
             }
             else {
                 result = num1 / num2;
@@ -66,25 +78,16 @@ function evalFunc(Array) {
             break;
         case '%':
             if (num2 == 0) {
-                alert("Don't divide by zero!");
-                evalArray.splice(2);
-                var temp = upper_disp.textContent.split('');
-                temp.splice(upper_disp.textContent.trim().length-2)
-                var straight = temp.join('');
-                upper_disp.textContent = straight;
+                alert("Don't divide by zero!😡");
+                handleRogue('%');
             }
             else {
                 result = num1 % num2;
             }
             break;
         default:
-            alert('Math error');
-            evalArray.splice(2);
-            var temp = upper_disp.textContent.split('');
-            temp.splice(upper_disp.textContent.trim().length-2)
-            var straight = temp.join('');
-            upper_disp.textContent = straight;
-            console.log(Array);
+            alert("Math error!🫠");
+            handleRogue('=');
     }
     if (opr2 !== '=') {
         var strResult = result.toString();
